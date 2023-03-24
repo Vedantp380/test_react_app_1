@@ -28,51 +28,52 @@ function AddContact(props) {
   
 
     return (
-        <Container  style={{ margin: 20 }}>
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-        <label>First Name :  </label>
-          <input 
-            type="text" 
-            value={fname}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder='First Name'
-            // style={myStyle}
-          />
-        {/* </label> */}
-        </Form.Field>
-        <Form.Field>
-        <label>Last Name :  </label>
-          <input 
-            type="text" 
-            value={lname}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder='Last Name'
-            // style={myStyle}
-          />
-        {/* </label> */}
-        </Form.Field>
+      <div></div>
+      //   <Container  style={{ margin: 20 }}>
+      // <Form onSubmit={handleSubmit}>
+      //   <Form.Field>
+      //   <label>First Name :  </label>
+      //     <input 
+      //       type="text" 
+      //       value={fname}
+      //       onChange={(e) => setFirstName(e.target.value)}
+      //       placeholder='First Name'
+      //       // style={myStyle}
+      //     />
+      //   {/* </label> */}
+      //   </Form.Field>
+      //   <Form.Field>
+      //   <label>Last Name :  </label>
+      //     <input 
+      //       type="text" 
+      //       value={lname}
+      //       onChange={(e) => setLastName(e.target.value)}
+      //       placeholder='Last Name'
+      //       // style={myStyle}
+      //     />
+      //   {/* </label> */}
+      //   </Form.Field>
 
-        <Form.Field>
-        <label>Email : </label>
-          <input 
-            type="text" 
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
-            placeholder='E-mail'
-          />
+      //   <Form.Field>
+      //   <label>Email : </label>
+      //     <input 
+      //       type="text" 
+      //       value={mail}
+      //       onChange={(e) => setMail(e.target.value)}
+      //       placeholder='E-mail'
+      //     />
     
-        </Form.Field>
+      //   </Form.Field>
 
-        <Checkbox label='I agree to the Terms and Conditions' />
+      //   <Checkbox label='I agree to the Terms and Conditions' />
 
             
-        <Form.Field>
-        <Button type="submit" >Add </Button>
-        </Form.Field>
-      </Form>
+      //   <Form.Field>
+      //   <Button type="submit" >Add </Button>
+      //   </Form.Field>
+      // </Form>
 
-      </Container>
+      // </Container>
     )
   }
 

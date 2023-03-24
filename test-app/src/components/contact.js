@@ -4,16 +4,11 @@ import { useState } from "react";
 import { Button, Checkbox, Form, Container} from "semantic-ui-react";
 
 
-function AddContact() {
+function AddContact(props) {
 
-    // const myStyle = {
-    //     color: "white",
-    //     backgroundColor: "White",
-    //     padding: "5px",
-    //     fontFamily: "Sans-Serif",
-    //     box-sizing:"border-box";
-    //   };
 
+   
+  
     const [fname, setFirstName] = useState("");
     const [lname, setLastName] = useState("");
     const [mail, setMail] = useState("");
@@ -25,8 +20,13 @@ function AddContact() {
         "Last Name": lname,
         "E-mail":mail
       }
+
+      props.sendData(name_dict)
+      // console.log(name_dict)
     }
   
+  
+
     return (
         <Container  style={{ margin: 20 }}>
       <Form onSubmit={handleSubmit}>
@@ -68,7 +68,7 @@ function AddContact() {
 
             
         <Form.Field>
-        <Button type="submit">Add </Button>
+        <Button type="submit" >Add </Button>
         </Form.Field>
       </Form>
 
@@ -77,3 +77,35 @@ function AddContact() {
   }
 
 export default AddContact;
+// import { useRef } from "react"
+
+// export const AddContact = () => {
+//     const inputFirstName = useRef<HTMLInputElement>(null)
+//     const inputLastName = useRef<HTMLInputElement>(null)
+//     const inputAge = useRef<HTMLInputElement>(null)
+
+//     // interface FormDataType {firstName:string, lastName: string, age: string}
+//     // const formData =  {firstName: String, lastName: String, mail: String}
+//     const formData =  {firstName: "", lastName: "", mail: ""}
+
+//     const onSubmitHandler = (event) => {
+//         event.preventDefault();
+//         formData.firstName = inputFirstName?.current?.value||""
+//         formData.lastName = inputLastName?.current?.value||""
+//         formData.age = inputAge?.current?.value||""
+//         console.log(formData)
+// 	//Form submission happens here
+//     }
+
+//     return(
+//         <form onSubmit={onSubmitHandler}>
+//             <div><label htmlFor="first_name">First Name</label></div>
+//             <div><input id="first_name" ref={inputFirstName} type="text"/></div>
+//             <div><label htmlFor="last_name">Last Name</label></div>
+//             <div><input id="last_name" ref={inputLastName} type="text"/></div>
+//             <div><label htmlFor="age">Age</label></div>
+//             <div><input id="age" ref={inputAge} type="number"/></div>
+//             <input type="submit"/>
+//         </form>
+//     )
+// }

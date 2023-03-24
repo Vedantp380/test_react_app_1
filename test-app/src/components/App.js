@@ -1,28 +1,29 @@
 
 import React from "react";
-import Header from "./header";
+import Fileuplaod from "./UploadPage";
 import AddContact from "./contact";
-import ContactList from "./contactlist";
+import { useState } from "react";
+// import ContactList from "./contactlist";
 
 
 
 function App() {
+ 
+  const [data, setData] = useState({
+    "First Name": "",
+    "Last Name": "",
+    "E-mail":""
+  })
+  console.log(data)
+  const sendData = (data) => {
+    setData(data)
+  }
 
-  const contacts = [ {
-    id:"1",
-    "name": "Dipesh",
-    "email":"pandeyvedant0@gmail.com"
-  },
-  {
-    id:"2",
-    "name": "Romit",
-    "email":"romitt0@gmail.com"
-  }]
   return (
    <div className="ui container">
-    <Header/>
-    <AddContact />
-    <ContactList  contacts = {contacts}/>
+    <Fileuplaod/>
+    <AddContact  sendData={sendData} />
+    {/* <ContactList/> */}
    </div>
   );
 }
@@ -30,3 +31,5 @@ function App() {
 
 
 export default App;
+
+

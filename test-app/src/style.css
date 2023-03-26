@@ -1,0 +1,100 @@
+ /* checkbox */
+
+.checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: "Roboto", sans-serif;
+}
+
+.checkbox-container h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.checkbox-container .file-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.checkbox-container .file-container label {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+.checkbox-container .file-container .sheet-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-left: 20px;
+}
+
+.checkbox-container .file-container .sheet-container label {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.checkbox-container input[type="checkbox"] {
+  appearance: none;
+  border: 1px solid #ccc;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+}
+
+.checkbox-container input[type="checkbox"]:checked:before {
+  content: "\2714";
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+
+
+
+/*upload.js*/
+.ui.header {
+  text-align: center;
+  background-color: white;
+}
+
+#inputFile {
+  margin-bottom: 10px;
+}
+
+#check-box-container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 10px;
+}
+
+#submitFile {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#submitFile button {
+  padding: 10px 20px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#submitFile button:hover {
+  background-color: #006F8F;
+}

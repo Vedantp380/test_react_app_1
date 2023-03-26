@@ -49,14 +49,13 @@ def fileuplaod():
         data = request.data
         file_paths_str = data.decode()
         file_path_list = json.loads(file_paths_str)
-        for item in file_path_list:
+        for file_url, sheet_names in file_path_list.items():
+                response = request.get(file_url)
+                file_content = response.content
 
-                item_new = str(item).replace('/', "\\\\")
-               
-                df = pd.read_excel(item_new,header = 0, sheet_name = 'Sheet1')
-                
-                print(df)
-        # print(file_path_list)
+                for sheet_name in sheet_names:
+                        df = pd.read_excel(file_content, sheet_name=sheet_name)
+                        print(df)
         return file_paths_str
 
 if __name__ == "__main__":

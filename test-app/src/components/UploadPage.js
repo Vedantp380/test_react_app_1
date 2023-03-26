@@ -2,59 +2,59 @@ import React from "react";
 import { ChangeEvent, useState,useEffect } from 'react';
 import { Header } from 'semantic-ui-react';
 import XLSX from 'xlsx';
+import Checkbx from "../components/checkbox";
+import '../style.css'; 
 
 const UploadPage = () => {
 
 const [filename, setFileName] = useState([])
 const [filesheet, setFileSheet] = useState({})
-const [checkedItems, setCheckedItems] = useState([]);
+const [parameterswithfileurl, setParametersWithUrl] = useState([]);
 
 
+const [selectedValues, setSelectedValues] = useState({});
 
+ 
 async function readFiles(files) {
   
-  const workbooks = {
-    wb:[]
-  };
-  const sheets = {
-    file:{ },
-    sheet:[],
-  };
-  for (const ff of files){
-    // console.log(ff)
-      for (const file of ff) {
-        // console.log("oo", file)
-        const value = file.name
-        const workbook = await readFile(file);
-        workbooks.wb.push(workbook);
-        // console.log("workbooks", workbooks)
-          for (const workbook of workbooks.wb ) {
-            // console.log("wb", workbook)
-            for (const sheetName of workbook.SheetNames) {
-                sheets.file.push(value)
-                sheets.sheet.push(sheetName)
-                // console.log("dict", sheets)
-          }
-        }
-        
+  const workbooks = [];
+
+    for (const key of files) {
+     
+      const workbook = await readFile(key);
+      const sheetNames = getSheetNames(workbook);
+      workbooks.push({
+        fileName: key.name,
+        sheetNames: sheetNames
+      });
       }
+      console.log("All files read successfully!", workbooks);
+      return workbooks;
+    }
 
-
-      return sheets;
-}
-}
+    function getSheetNames(workbook) {
+      const sheetNames = [];
+      const sheets = workbook.Sheets;
+    
+      for (const sheetName in sheets) {
+        sheetNames.push(sheetName);
+      }
+    
+      return sheetNames;
+    }
+    
 
 
 
   async function handleFiles(files) {
     let arr = []
     arr.push(files)
-    const workbooks = await readFiles(arr);
+    // console.log("arr",arr[0])
+    const workbooks = await readFiles(arr[0]);
     setFileSheet(workbooks)
   
   }
 // console.log("ss",filesheet)
-
 
 
 function fileUpload(x) {
@@ -95,18 +95,19 @@ function readFile(x) {
   
 }
 
+function createFileUrl(datatobackend) {
+  const baseUrl = "C:/Users/pandeyv1581/OneDrive - ARCADIS/Desktop/uploadfiles/";
+  const urls = {};
 
-function createFileUrl() {
-  let path_l = "C:/Users/pandeyv1581/OneDrive - ARCADIS/Desktop/uploadfiles" ;
-  let path_array = [] 
-  for (let i = 0; i < filename.length; i++) {
-      let path = ""
-      path = path_l + "/" + filename[i];
-      path_array.push(path)
-}
-  // const path = filename.map(item => "C:\Users\pandeyv1581\OneDrive - ARCADIS\Desktop"`/${item}`);
-  // console.log("path",path_array)
-  Promise.all(path_array).then((result) => {
+  for (const fileName in datatobackend) {
+    const sheetNames = datatobackend[fileName];
+    const url = `${baseUrl}${fileName}`;
+
+    urls[url] = sheetNames;
+  }
+  setParametersWithUrl(urls)
+  console.log("urlsssss",urls)
+  Promise.all(urls).then((result) => {
     // console.log("result",result);
     fetch("http://127.0.0.1:5000/upload",{
       method: "POST",
@@ -116,40 +117,24 @@ function createFileUrl() {
       mode: 'no-cors',   
     })
   })
-//  console.log(filename)
 }
+
+
 
 const inputFileOnChange = (e) => {
-
-
   fileUpload(e.target.files)
-  checkedSheetsandFilename()
   handleFiles(e.target.files)
 
-  
-
 }
 
 
-function checkedSheetsandFilename (){
+const handleCheckboxChange = (newValues) => {
+  setSelectedValues(newValues);
+};
 
-    console.log("filesheet",filesheet)
-    console.log("checkedItems",checkedItems)
 
-}
-function handleCheckboxChange(event) {
-  checkedSheetsandFilename()
-  const { value } = event.target;
-  
-  setCheckedItems(prevState => {  if (prevState.includes(value)) {
-    return prevState.filter(item => item !== value);
-  } else {
-    return [...prevState, value];
-  }
-});
-}
-// console.log("checkedItems",checkedItems)
 
+console.log("urlspara",parameterswithfileurl)
 
 return (
   <>
@@ -157,27 +142,21 @@ return (
     <div id="inputFile">
          <input  type="file" onChange={inputFileOnChange}  multiple/>
      </div>
-     <div id="sheet_name" style={{ textAlign:"center"}}>
-       <input type = "text" placeholder="Sheet Name"></input>
-     </div>
-     <div id="submitFile"> <button onClick={() => createFileUrl()}>Upload</button> </div>
      </h1>
-
-     {
-      filesheet.sheet!=undefined && filesheet.sheet.map(item => (
-
-        <div key={item}>
-          {item}
-          <input
-            type="checkbox"
-            value={item}
-            checked={checkedItems.includes(item)}
-            onChange={handleCheckboxChange}
-            style={{"align":"center"}}
+     <div className="ui container" style={{display: "flex", justifyContent: "center", textAlign:"center", height:"auto"}}>
+     <div id="check-box-container" style={{  display: "grid",gridTemplateColumns: "auto",gridGap: "10px"}}>
+      <Checkbx 
+          filesheet={filesheet}
+          onCheckboxChange={handleCheckboxChange}
+          
           />
-          <label>{item}</label>
-        </div>
-      ))}
+    {/* <container /> */}
+    </div>
+   </div>
+    <div id="submitFile" style={{display: "flex", justifyContent:"center"}}>
+       <button onClick={() => createFileUrl(selectedValues)}>Upload
+       </button> 
+    </div>
   </>
    );
   
